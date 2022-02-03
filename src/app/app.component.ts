@@ -9,6 +9,10 @@ import { Product } from './models/product.model';
 })
 export class AppComponent {
   imgParent = '';
+
+  // Si lo va a mostrar
+  showImg = true;
+
   // Array de productos
   products: Product[] = [
     {
@@ -42,5 +46,9 @@ export class AppComponent {
   // recibir un evento
   onLoaded (img: string) {
     console.log('log padre', img);
+  }
+
+  toggleImg() {
+    this.showImg = !this.showImg;
   }
 }

@@ -1,7 +1,10 @@
 <p><input type="text" [(ngModel)]="imgParent"></p>
+<button (click)="toggleImg()">Toggle Img</button>
+<p>{{ showImg }}</p>
 <!-- loaded para escuchar el componente en el componente padre -->
 <!-- $event - para recibir información que nosotros hemos creado  -->
-<app-img (loaded)="onLoaded($event)" [img]="imgParent"></app-img>
+<!-- Si showImg está en true, mostraremos el componente -->
+<app-img *ngIf="showImg" (loaded)="onLoaded($event)" [img]="imgParent"></app-img>
 
 <app-product [product]="product" *ngFor="let product of products"></app-product>
 
