@@ -1,11 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input, 
+  Output, 
+  EventEmitter, 
+  OnChanges, 
+  AfterViewInit,
+  OnDestroy 
+} from '@angular/core';
 
 @Component({
   selector: 'app-img',
   templateUrl: './img.component.html',
   styleUrls: ['./img.component.scss']
 })
-export class ImgComponent implements OnInit {
+export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
   @Input() img: string = '';
   // loaded() - nombre de nuestro evento
@@ -14,9 +23,38 @@ export class ImgComponent implements OnInit {
   @Output() loaded = new EventEmitter<string>();
   imgDefault = '../../../assets/img/descarga.png';
 
-  constructor() { }
+  constructor() { 
+    // Antes del render
+    console.log('constructor', 'imgValue =>', this.img);
+    // No correr cosas asincronas
+    // Hacer cosas inmediatas y no asincronas
+    // Corre una vez 
+  }
+
+  ngOnChanges() {
+    // Antes y durante del render
+    // Actualizando los cambios de los inputs
+    // Corre muchas veces 
+    // Detectar cambios en los inputs
+    console.log('ngOnChanges', 'imgValue =>', this.img);
+  }
 
   ngOnInit(): void {
+    // Corre antes del RENDER
+    // Podemos correr cosas asincronas, cualquier cosa que podamos esperar en un determinado tiempo
+    // Corre una sola vez
+    console.log('ngOnInit', 'imgValue =>', this.img);
+  }
+
+  ngAfterViewInit(): void {
+    // Corre después del Render
+    // Manejamos los hijos  
+    console.log('ngAfterViewInit');
+  }
+
+  ngOnDestroy(): void {
+    // Se corre solo cuando vayamos a eliminar el componente
+    console.log('ngOnDestroy');
   }
 
   imgError() {
