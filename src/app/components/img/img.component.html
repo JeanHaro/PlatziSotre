@@ -1,1 +1,8 @@
-<p>img works!</p>
+<!-- *ngIf='img' = si la imagen existe -->
+<img width="200" [src]="img" *ngIf="img; else elseImg">
+<!-- Si no existe la imagen de arriba aparece este img -->
+<ng-template #elseImg>
+    <img src="../../../assets/img/descarga.png">
+</ng-template>
+
+
