@@ -5,6 +5,19 @@
 <p>
     Total: ${{ total }}
 </p>
+<p>
+    <!-- date - muestre un formato legible de fechas -->
+    <!-- short - para ver un formato corto de la fecha -->
+    Today: {{ today | date: 'short' }}
+</p>
+<p>
+    <!-- 'yyyy....dd....MM' - Formato que yo quiero ver la fecha -->
+    Otra fecha: {{ date | date: 'yyyy....dd....MM' }}
+</p>
+<p>
+    <!-- uppercase - para colocar el texto en mayúsculas -->
+    {{ 'HolA BascVasdaAS SDasd' | uppercase }}
+</p>
 <div class="products--grid">
     <app-product 
         [product]="product" 

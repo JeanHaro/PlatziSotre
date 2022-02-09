@@ -19,6 +19,9 @@ export class ProductsComponent implements OnInit {
   // Cuanto cuesta en total todo lo que está escogiendo al carrito
   total = 0;
   products: Product[] = [];
+  // Date() - fecha de hoy 
+  today = new Date();
+  date = new Date(2021, 1, 21);
   // Array de productos
   /* products: Product[] = [
     {
