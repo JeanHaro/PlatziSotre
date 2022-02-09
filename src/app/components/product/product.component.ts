@@ -19,7 +19,9 @@ export class ProductComponent implements OnInit {
     id: '',
     price: 0,
     image: '',
-    name: ''
+    title: '',
+    description: '',
+    category: '',
   };
   // Lo que debemos decirle al EventEmitter es que nosotros queremos transmitirle el producto que se está agregando 
   // Por eso se le coloca Product

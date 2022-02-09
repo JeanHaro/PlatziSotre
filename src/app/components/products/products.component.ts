@@ -5,6 +5,7 @@ import { Product } from '../../models/product.model'
 
 // Servicios
 import { StoreService } from '../../services/store.service';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-products',
@@ -17,8 +18,9 @@ export class ProductsComponent implements OnInit {
   myShoppingCart: Product[] = [];
   // Cuanto cuesta en total todo lo que está escogiendo al carrito
   total = 0;
+  products: Product[] = [];
   // Array de productos
-  products: Product[] = [
+  /* products: Product[] = [
     {
       id: '1',
       name: 'EL mejor juguete',
@@ -43,13 +45,23 @@ export class ProductsComponent implements OnInit {
       price: 23,
       image: '../../../assets/img/books.jpg'
     },
-  ];
+  ]; */
 
-  constructor (private storeService: StoreService) { 
+  constructor (
+    private storeService: StoreService,
+    private productsService: ProductsService) { 
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
   ngOnInit(): void {
+    // Manejar cosas asincronas
+    // subscribe() -> tendremos la información ya lista que hemo traido del API 
+    this.productsService.getAllProducts()
+    .subscribe(data => {
+      // console.log(data); 
+      // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+      this.products = data;
+    })
   }
 
   onAddToShoppingCart (product: Product) {
