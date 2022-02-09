@@ -11,6 +11,10 @@
     Today: {{ today | date: 'short' }}
 </p>
 <p>
+    <!-- timeAgo - el pipe que creamos -->
+    Today: {{ today | timeAgo }}
+</p>
+<p>
     <!-- 'yyyy....dd....MM' - Formato que yo quiero ver la fecha -->
     Otra fecha: {{ date | date: 'yyyy....dd....MM' }}
 </p>

@@ -2,6 +2,7 @@
 <!-- currency - le pone un formato adecuado para monedas, y le puede poner el valor de la moneda que estamos manejando, como el de 
     Colombia, Perú, etc  -->
 <h2>{{ product.price | currency: 'PE' }}</h2>
-<p>{{ product.title }}</p>
+<!-- reverse - es el pipe que creamos para poner el texto al revés -->
+<p>{{ product.title | reverse }}</p>
 
 <button (click)="onAddToCart()">Add Cart</button>
