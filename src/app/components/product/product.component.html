@@ -4,5 +4,6 @@
 <h2>{{ product.price | currency: 'PE' }}</h2>
 <!-- reverse - es el pipe que creamos para poner el texto al revés -->
 <p>{{ product.title | reverse }}</p>
-
+<!-- appHighlight - es la directiva que creamos -->
+<p appHighlight>{{ product.description }}</p>
 <button (click)="onAddToCart()">Add Cart</button>
