@@ -19,9 +19,8 @@ export class ProductsComponent implements OnInit {
   // Cuanto cuesta en total todo lo que está escogiendo al carrito
   total = 0;
   products: Product[] = [];
-  // Date() - fecha de hoy 
-  today = new Date();
-  date = new Date(2021, 1, 21);
+  showProductDetail = false;
+
   // Array de productos
   /* products: Product[] = [
     {
@@ -79,5 +78,16 @@ export class ProductsComponent implements OnInit {
     // Para agregar al array el producto
     this.storeService.addProduct(product);
     this.total = this.storeService.getTotal();
+  }
+
+  toggleProductDetail() {
+    this.showProductDetail = !this.showProductDetail;
+  }
+
+  onShowDetail(id: string) {
+    this.productsService.getProduct(id)
+      .subscribe(data => {
+        console.log('product', data);
+      })
   }
 }

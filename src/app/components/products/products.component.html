@@ -1,30 +1,14 @@
-<p>
-    <!-- Nos dice cuantos elementos tenemos acá -->
-    La cantidad {{ myShoppingCart.length }}
-</p>
-<p>
-    Total: ${{ total }}
-</p>
-<p>
-    <!-- date - muestre un formato legible de fechas -->
-    <!-- short - para ver un formato corto de la fecha -->
-    Today: {{ today | date: 'short' }}
-</p>
-<p>
-    <!-- timeAgo - el pipe que creamos -->
-    Today: {{ today | timeAgo }}
-</p>
-<p>
-    <!-- 'yyyy....dd....MM' - Formato que yo quiero ver la fecha -->
-    Otra fecha: {{ date | date: 'yyyy....dd....MM' }}
-</p>
-<p>
-    <!-- uppercase - para colocar el texto en mayúsculas -->
-    {{ 'HolA BascVasdaAS SDasd' | uppercase }}
-</p>
+<button (click)="toggleProductDetail()">Click</button>
 <div class="products--grid">
     <app-product 
         [product]="product" 
         *ngFor="let product of products"
-        (addedProduct)="onAddToShoppingCart($event)"></app-product>
+        (addedProduct)="onAddToShoppingCart($event)"
+        (showProduct)="onShowDetail($event)"></app-product>
+</div>
+<div class="product-detail" [class.active]="showProductDetail">
+    <div>
+        <button (click)="toggleProductDetail()">Close</button>
+        Contenido
+    </div>
 </div>
