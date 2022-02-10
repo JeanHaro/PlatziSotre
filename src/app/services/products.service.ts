@@ -37,4 +37,9 @@ export class ProductsService {
     // patch<> - esto nos sirve para ser la edición de un atributo en particular, si solo cambiamos el nombre, solo enviamos el nombre
     return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
+
+  // Borrar datos
+  delete (id: string) {
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+  }
 }

@@ -6,6 +6,7 @@ import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/produc
 // Servicios
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -129,6 +130,16 @@ export class ProductsComponent implements OnInit {
       const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
       // En ese array específico pon la nueva actualización
       this.products[productIndex] = data;
+    })
+  }
+
+  deleteProduct() {
+    const id = this.productChosen.id;
+    this.productsService.delete(id)
+    .subscribe(() => {
+      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+      this.products.splice(productIndex, 1);
+      this.showProductDetail = false;
     })
   }
 }
