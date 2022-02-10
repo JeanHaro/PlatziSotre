@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 // HTTP - para que en los servicios podamos hacer peticiones
 import { HttpClientModule } from '@angular/common/http';
+import { SwiperModule } from 'swiper/angular'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +30,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    SwiperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

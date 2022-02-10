@@ -11,3 +11,8 @@ export interface Product {
     description: string;
     category: Category;
 }
+
+// Omit<> - lo que hace es que omita algunas variables de una interface
+export interface CreateProductDTO extends Omit<Product, 'id' | 'category'> {
+    categoryId: number;
+}
