@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Interface
-import { Product, CreateProductDTO } from '../models/product.model';
+import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +28,13 @@ export class ProductsService {
   create (dto: CreateProductDTO) {
     // post - retorne un producto, la data que venga es la data que vamos enviar en el cuerpo de la petición para que sea enviado a la API
     return this.http.post<Product>(this.apiUrl, dto);
+  }
+
+  // Actualizar datos
+  // Cual es ese producto que queremos actualizar y para ello necesitamos saber el id
+  update (id: string, dto: UpdateProductDTO) {
+    // put<> - put es para enviar toda la información, aún así si solo hemos cambiado un solo valor
+    // patch<> - esto nos sirve para ser la edición de un atributo en particular, si solo cambiamos el nombre, solo enviamos el nombre
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
 }
