@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+// Servicios
+import { StoreService } from '../../services/store.service';
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -8,10 +11,16 @@ import { Component, OnInit } from '@angular/core';
 export class NavComponent implements OnInit {
 
   activeMenu = false;
+  counter = 0;
 
-  constructor() { }
+  constructor (private storeService: StoreService) { }
 
   ngOnInit(): void {
+    // subscribe() - Cada vez que haya un cambio entonces este nos avisará
+    this.storeService.myCart$.subscribe(products => {
+      // Cada vez que añade a un carrito nos avisará 
+      this.counter = products.length;
+    })
   }
 
   toggleMenu() {
