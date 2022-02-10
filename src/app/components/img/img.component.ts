@@ -18,6 +18,7 @@ import {
 export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
   img: string = '';
+
   // img - para poder llamarlo desde otro html como el app.component.html
   @Input('img')
   // Se ejecuta si solo si se canmbia el input img
