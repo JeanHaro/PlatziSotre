@@ -15,6 +15,6 @@ export class ProductsService {
 
   getAllProducts() {
     // http.get() - hacer una petición a una URL 
-    return this.http.get<Product[]>('https://fakestoreapi.com/products');
+    return this.http.get<Product[]>('https://young-sands-07814.herokuapp.com/api/products');
   }
 }

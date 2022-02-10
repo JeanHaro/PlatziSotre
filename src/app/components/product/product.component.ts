@@ -18,10 +18,13 @@ export class ProductComponent {
   @Input() product: Product = {
     id: '',
     price: 0,
-    image: '',
+    images: [],
     title: '',
     description: '',
-    category: '',
+    category: {
+      id: '',
+      name: '',
+    },
   };
   // Lo que debemos decirle al EventEmitter es que nosotros queremos transmitirle el producto que se está agregando 
   // Por eso se le coloca Product
