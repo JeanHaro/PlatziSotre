@@ -31,7 +31,9 @@ export class ProductsComponent implements OnInit {
       id: '',
       name: '',
     },
-  }
+  };
+  limit = 10; // 10 elementos
+  offset = 0; // Inicie en 0
 
   // Array de productos
   /* products: Product[] = [
@@ -70,11 +72,15 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     // Manejar cosas asincronas
     // subscribe() -> tendremos la información ya lista que hemo traido del API 
-    this.productsService.getAllProducts()
+    // this.productsService.getAllProducts() // obtenemos todos los productos
+    // Primer parametro - Traiga 10 elementos
+    // Segundo elemento - Iniciamos en el 0 del array
+    this.productsService.getProductsByPage(10, 0) // Queremos los productos por una página en específico
     .subscribe(data => {
       // console.log(data); 
       // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
       this.products = data;
+      this.offset = this.limit;
     })
   }
 
@@ -140,6 +146,18 @@ export class ProductsComponent implements OnInit {
       const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
       this.products.splice(productIndex, 1);
       this.showProductDetail = false;
+    })
+  }
+
+  loadMore() {
+    this.productsService.getProductsByPage(this.limit, this.offset) // Queremos los productos por una página en específico
+    .subscribe(data => {
+      // concat() - para concatenar un array
+      // concatenamos el array que nos llegue de data para que añada más, en vez de sobrescribir
+      // Modificamos el array original
+      this.products = this.products.concat(data);
+      // le damos el valor limit a offset porque es cuanto queremos saltar
+      this.offset = this.limit;
     })
   }
 }

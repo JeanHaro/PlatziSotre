@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // Esto es un servicio propio de angular para hacer request
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
@@ -14,14 +14,32 @@ export class ProductsService {
   //  Un servicio que inyecta a otro servicio
   constructor (private http: HttpClient) { }
 
-  getAllProducts() {
+  // Para que obtenga todos los productos
+  // También para que obtenga una parte de los productos como getProductsByPage
+  getAllProducts (limit?: number, offset?: number) {
+    // Enviara parametros de forma dinamica
+    let params = new HttpParams(); 
+
+    // Si limit y offset es true
+    if (limit && offset) {
+      params = params.set('limit', limit);
+      params = params.set('offset', limit);
+    }
     // http.get() - hacer una petición a una URL 
-    return this.http.get<Product[]>(this.apiUrl);
+    return this.http.get<Product[]>(this.apiUrl, { params });
   }
 
   // Obtener un producto con el id
   getProduct (id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  // Obtener una cantidad de productos
+  getProductsByPage (limit: number, offset: number) {
+    return this.http.get<Product[]>(`${this.apiUrl}`, {
+      // Enviar parametros al get
+      params: {limit, offset}
+    });
   }
 
   // Crear productos
