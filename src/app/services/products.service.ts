@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 // Esto es un servicio propio de angular para hacer request
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+// retry - Cuantas veces reintentar una petición
+// retryWhen - reintentar cada vez que pase algo
+import { retry } from 'rxjs/operators'; 
+
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
 
@@ -9,7 +13,7 @@ import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.m
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  private apiUrl = 'https://young-sands-07814.heroku.com/api/products';
 
   //  Un servicio que inyecta a otro servicio
   constructor (private http: HttpClient) { }
@@ -26,7 +30,10 @@ export class ProductsService {
       params = params.set('offset', limit);
     }
     // http.get() - hacer una petición a una URL 
-    return this.http.get<Product[]>(this.apiUrl, { params });
+    return this.http.get<Product[]>(this.apiUrl, { params })
+    .pipe(
+      retry(3) // Reintentar la petición 3 veces
+    );
   }
 
   // Obtener un producto con el id
