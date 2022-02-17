@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 // Esto es un servicio propio de angular para hacer request
-import { HttpClient, HttpParams } from '@angular/common/http';
+// HttpStatusCode - ver el estado de la web
+import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 // retry - Cuantas veces reintentar una petición
 // retryWhen - reintentar cada vez que pase algo
-import { retry } from 'rxjs/operators'; 
+// catchError - para capturar el error
+import { retry, catchError } from 'rxjs/operators'; 
+
+// throwError - Devolver un error
+import { throwError } from 'rxjs';  
 
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
 
 // Ambientes de produccion y desarrollo
 import { environment } from '../../environments/environment';
+import { pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +51,29 @@ export class ProductsService {
 
   // Obtener un producto con el id
   getProduct (id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        // Si es un error 500, que es un error interno del servidor
+        // Mandamos un error de frontend 
+        /* if (error.status === 500) */
+        if (error.status === HttpStatusCode.Conflict) {
+          return throwError('Algo está fallando en el server');
+        }
+
+        /* if (error.status === 404) */
+        if (error.status === HttpStatusCode.NotFound) {
+          return throwError('El producto no existe');
+        }
+        
+        /* if (error.status === 401) */
+        if (error.status === HttpStatusCode.Unauthorized) {
+          return throwError('No estas permitido');
+        }
+
+        return throwError('Ups, algo salió mal');
+      })
+    )
   }
 
   // Obtener una cantidad de productos

@@ -35,6 +35,12 @@ export class ProductsComponent implements OnInit {
   limit = 10; // 10 elementos
   offset = 0; // Inicie en 0
 
+  // loading - que puede estar cargando
+  // success - que todo está bien
+  // error - que hubo un error
+  // init - estado inicial
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init'; 
+
   // Array de productos
   /* products: Product[] = [
     {
@@ -103,11 +109,17 @@ export class ProductsComponent implements OnInit {
   }
 
   onShowDetail(id: string) {
+    this.statusDetail = 'loading';
+    this.toggleProductDetail();
     this.productsService.getProduct(id)
       .subscribe(data => {
         // console.log('product', data);
-        this.toggleProductDetail();
+        // this.toggleProductDetail();
         this.productChosen = data;
+        this.statusDetail = 'success';
+      }, errorMsg => {
+        window.alert(errorMsg);
+        this.statusDetail = 'error';
       })
   }
 
