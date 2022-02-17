@@ -6,7 +6,8 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angu
 // retry - Cuantas veces reintentar una petición
 // retryWhen - reintentar cada vez que pase algo
 // catchError - para capturar el error
-import { retry, catchError } from 'rxjs/operators'; 
+// map - permite realizar operaciones matematicas
+import { retry, catchError, map } from 'rxjs/operators'; 
 
 // throwError - Devolver un error
 import { throwError } from 'rxjs';  
@@ -45,7 +46,14 @@ export class ProductsService {
     // http.get() - hacer una petición a una URL 
     return this.http.get<Product[]>(this.apiUrl, { params })
     .pipe(
-      retry(3) // Reintentar la petición 3 veces si no encuentra
+      retry(3), // Reintentar la petición 3 veces si no encuentra
+      // map() - evaluar cada valor que venga del observable
+      map(products => products.map(item => {
+        return {
+          ...item,
+          taxes: .19 * item.price // impuestos, no viene del back
+        }
+      }))  
     );
   }
 
@@ -81,7 +89,15 @@ export class ProductsService {
     return this.http.get<Product[]>(`${this.apiUrl}`, {
       // Enviar parametros al get
       params: {limit, offset}
-    });
+    }).pipe(
+      // map() - evaluar cada valor que venga del observable
+      map(products => products.map(item => {
+        return {
+          ...item,
+          taxes: .19 * item.price // impuestos, no viene del back
+        }
+      }))
+    )
   }
 
   // Crear productos

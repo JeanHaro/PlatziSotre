@@ -81,6 +81,7 @@ export class ProductsComponent implements OnInit {
     // this.productsService.getAllProducts() // obtenemos todos los productos
     // Primer parametro - Traiga 10 elementos
     // Segundo elemento - Iniciamos en el 0 del array
+    // this.productsService.getAllProducts(10, 0) // Obtener todos los productos
     this.productsService.getProductsByPage(10, 0) // Queremos los productos por una página en específico
     .subscribe(data => {
       // console.log(data); 

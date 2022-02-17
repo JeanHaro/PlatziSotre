@@ -10,6 +10,8 @@ export interface Product {
     images: string[];
     description: string;
     category: Category;
+    // Opcional
+    taxes?: number;
 }
 
 // Omit<> - lo que hace es que omita algunas variables de una interface
