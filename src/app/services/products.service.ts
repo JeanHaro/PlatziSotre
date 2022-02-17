@@ -13,7 +13,9 @@ import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.m
   providedIn: 'root'
 })
 export class ProductsService {
-  private apiUrl = 'https://young-sands-07814.heroku.com/api/products';
+  // private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  // El enlace está en el proxy
+  private apiUrl = '/api/products';
 
   //  Un servicio que inyecta a otro servicio
   constructor (private http: HttpClient) { }
@@ -32,7 +34,7 @@ export class ProductsService {
     // http.get() - hacer una petición a una URL 
     return this.http.get<Product[]>(this.apiUrl, { params })
     .pipe(
-      retry(3) // Reintentar la petición 3 veces
+      retry(3) // Reintentar la petición 3 veces si no encuentra
     );
   }
 
