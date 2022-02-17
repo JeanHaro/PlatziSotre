@@ -9,13 +9,18 @@ import { retry } from 'rxjs/operators';
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
 
+// Ambientes de produccion y desarrollo
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   // private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
   // El enlace está en el proxy
-  private apiUrl = '/api/products';
+  // environment.API_URL - Si el ambiente está en desarrollo, viene el valor en vacío
+  // environment.API_URL - Si el ambiente está en producción, viene el enlace 
+  private apiUrl = `${environment.API_URL}/api/products`;
 
   //  Un servicio que inyecta a otro servicio
   constructor (private http: HttpClient) { }
