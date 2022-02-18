@@ -18,7 +18,10 @@ import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.m
 
 // Ambientes de produccion y desarrollo
 import { environment } from '../../environments/environment';
-import { pipe } from 'rxjs';
+
+// Interceptores
+// checktime - es el contexto que necesitamos encender
+import { checkTime } from '../interceptors/time.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +47,10 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', limit);
     }
-    // http.get() - hacer una petición a una URL 
-    return this.http.get<Product[]>(this.apiUrl, { params })
+    // http.get() - hacer una petición a una URL
+    // Si queremos que alguna petición sea evaluada por el TimeInterceptor, tendriamos que enviarle el contexto
+    // Se vuelve true el checktime al llamarlo
+    return this.http.get<Product[]>(this.apiUrl, { params, context: checkTime() })
     .pipe(
       retry(3), // Reintentar la petición 3 veces si no encuentra
       // map() - evaluar cada valor que venga del observable
