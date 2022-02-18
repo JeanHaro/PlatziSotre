@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// switchMap - para que funcione como un .then
+import { switchMap } from 'rxjs/operators';
 
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/product.model'
@@ -122,6 +124,37 @@ export class ProductsComponent implements OnInit {
         window.alert(errorMsg);
         this.statusDetail = 'error';
       })
+  }
+
+  readAndUpdate (id: string) {
+    this.productsService.getProduct(id)
+    // Apenas obtengamos el producto queremos enviar una actualizacion
+    // Esto es un callback hell
+    .pipe(
+      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+      // switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+      // switchMap((product) => this.productsService.update(product.id, {title: 'change'}))
+    )
+    .subscribe(data => {
+      console.log(data);
+    });
+    /* zip(
+      this.productsService.getProduct(id),
+      this.productsService.update(id, {title: 'nuevo'})
+    )
+    .subscribe(response => {
+      // Primer observador
+      const read = response[0];
+      // Segundo observador
+      const update = response[1];
+    }) */
+    this.productsService.fetchReadAndUpdate(id, {title: 'change'})
+    .subscribe(response => {
+      // Primer observador
+      const read = response[0];
+      // Segundo observador
+      const update = response[1];
+    })
   }
 
   createNewProduct() {

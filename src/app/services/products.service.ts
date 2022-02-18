@@ -10,7 +10,8 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angu
 import { retry, catchError, map } from 'rxjs/operators'; 
 
 // throwError - Devolver un error
-import { throwError } from 'rxjs';  
+// zip - enviar, juntar o comprimir 2 observadores y recibir las respuestas de los dos al mismo tiempo
+import { throwError, zip } from 'rxjs';  
 
 // Interface
 import { Product, CreateProductDTO, UpdateProductDTO } from '../models/product.model';
@@ -55,6 +56,14 @@ export class ProductsService {
         }
       }))  
     );
+  }
+
+  // Read y Update
+  fetchReadAndUpdate (id: string, dto: UpdateProductDTO) {
+    return zip(
+      this.getProduct(id),
+      this.update(id, {title: 'nuevo'})
+    )
   }
 
   // Obtener un producto con el id
