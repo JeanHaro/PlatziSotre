@@ -6,6 +6,12 @@
 <p>
     <button (click)="downloadPdf()">Descargar PDF</button>
 </p>
+<p>
+    <input type="file" (change)="onUpload($event)">
+    <!-- Vamos a renderizar la imagen -->
+    <!-- ngIf - Si inicias en vacio solo muestralo o empieza a renderizar si tienes algo diferente a vacio -->
+    <img *ngIf="imgRta" [src]="imgRta">
+</p>
 <!--<button (click)="login()">Login</button>
 <button (click)="getProfile()">Get Profile</button> -->
 <app-products></app-products>

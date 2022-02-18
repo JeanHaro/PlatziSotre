@@ -18,6 +18,8 @@ export class AppComponent {
   showImg = true;
   // Inicia el token en nada
   token = '';
+  // Imagen para renderizar
+  imgRta = '';
 
   // Link img: https://www.w3schools.com/howto/img_avatar.png
 
@@ -74,5 +76,22 @@ export class AppComponent {
     // nombre que queremos darle al archivo, luego la url, luego que tipo de archivo es
     this.FileService.getFile('my.pdf', 'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf', 'application/pdf')
     .subscribe()
+  }
+
+  onUpload (event: Event) {
+    // Nuestro evento target que es un input
+    const element = event.target as HTMLInputElement;
+    // Verificar si tiene archivos
+    // Ir al item posicion 0
+    const file = element.files?.item(0);
+
+    // Si file existe ejecuta esto
+    if (file) {
+      this.FileService.uploadFile(file)
+      // La respuesta
+      .subscribe(rta => {
+        this.imgRta = rta.location;
+      });
+    }
   }
 }

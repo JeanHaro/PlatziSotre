@@ -6,10 +6,23 @@ import { tap, map } from 'rxjs/operators'
 // Descarga del archivo
 import { saveAs } from 'file-saver';
 
+// Environment
+import { environment } from 'src/environments/environment';
+
+// Tipado
+interface File {
+  originalname: string;
+  // Nombre del archivo
+  filename: string;
+  location: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
+
+  private apiUrl = `${environment.API_URL}/api/files`;
 
   constructor (private http: HttpClient) { }
 
@@ -28,5 +41,21 @@ export class FilesService {
       // Una vez me descarga el archivo me devuelve un true o false
       map(() => true)
     )
+  }
+
+  // Subir archivo
+  uploadFile (file: Blob) {
+    // Enviamos como un tipo formData() -> adjuntar archivos
+    const dto = new FormData();
+    // Como espera recibir el archivo
+    dto.append('file', file);
+
+    return this.http.post<File>(`${this.apiUrl}/upload`, dto, {
+      /* Opcional de acuerdo al backend
+        headers: {
+          'Content-type': 'multipart/form-data'
+        } 
+      */
+    });
   }
 }
