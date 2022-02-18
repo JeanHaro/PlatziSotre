@@ -16,7 +16,7 @@ export class NavComponent implements OnInit {
 
   activeMenu = false;
   counter = 0;
-  token = '';
+  // token = '';
   profile: User | null = null;
 
   constructor (
@@ -37,19 +37,20 @@ export class NavComponent implements OnInit {
   }
 
   login() {
-    this.authService.login('Jean@gmail.com', '1212')
-    .subscribe(rta => {
-      this.token = rta.access_token;
-      console.log(this.token);
-      this.getProfile(); // Mejorar
-    })
-  }
-
-  getProfile() {
-    this.authService.profile(this.token)
+    // this.authService.login('Jean@gmail.com', '1212')
+    this.authService.logininAndGet('Jean@gmail.com', '1212')
     .subscribe(user => {
       this.profile = user;
     })
   }
+
+  /* getProfile() {
+    // Ya no es necesario que el token esté en el componente porque estará guardado
+    // this.authService.getProfile(this.token)
+    this.authService.getProfile()
+    .subscribe(user => {
+      this.profile = user;
+    })
+  } */
 
 }
