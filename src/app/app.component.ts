@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { User } from './models/user.model';
 
-import { Product } from './models/product.model';
+// Servicios
+import { AuthService } from './services/auth.service';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +18,13 @@ export class AppComponent {
 
   // Link img: https://www.w3schools.com/howto/img_avatar.png
 
+  constructor (
+    private AuthService: AuthService,
+    private UsersService: UsersService
+  ) {
+
+  }
+
   // recibir un evento
   onLoaded (img: string) {
     console.log('log padre', img);
@@ -22,5 +32,26 @@ export class AppComponent {
 
   toggleImg() {
     this.showImg = !this.showImg;
+  }
+
+  // Crear Usuarios
+  createUser() {
+    this.UsersService.create({
+      name: 'Jean',
+      email: 'Jean@gmail.com',
+      password: '1212'
+    })
+    .subscribe(rta => {
+      console.log(rta);
+    })
+  }
+
+  // Iniciar sesion
+  login() {
+    this.AuthService.login('Jean@gmail.com', '1212')
+    .subscribe(rta => {
+      // Recibir el accesToken
+      console.log(rta.access_token);
+    })
   }
 }
