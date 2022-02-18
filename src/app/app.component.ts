@@ -15,6 +15,8 @@ export class AppComponent {
 
   // Si lo va a mostrar
   showImg = true;
+  // Inicia el token en nada
+  token = '';
 
   // Link img: https://www.w3schools.com/howto/img_avatar.png
 
@@ -51,7 +53,17 @@ export class AppComponent {
     this.AuthService.login('Jean@gmail.com', '1212')
     .subscribe(rta => {
       // Recibir el accesToken
-      console.log(rta.access_token);
+      // console.log(rta.access_token);
+      // almacenar el token
+      this.token = rta.access_token;
     })
+  }
+
+  // Obtener perfil
+  getProfile() {
+    this.AuthService.profile(this.token)
+    .subscribe(profile => {
+      console.log(profile);
+    });
   }
 }
