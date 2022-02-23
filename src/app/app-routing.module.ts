@@ -13,12 +13,21 @@ import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   // Acá se escriben las rutas
+  {
+    // Cuando esté vacío el path o la ruta por defecto
+    path: '',
+    // Hará una redirección al home
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
   { 
-    // Cuando se le coloca home, renderiza el componente Home
+    // No lo coloco path, para que esté con la ruta por defecto
+    // path: '',
     path: 'home',
     component: HomeComponent
   }, 
   {
+    // Cuando se le coloca category, renderiza el componente Category
     path: 'category',
     component: CategoryComponent
   },
