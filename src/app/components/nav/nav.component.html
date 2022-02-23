@@ -16,9 +16,13 @@
         <button (click)="toggleMenu()">Close</button>
 
         <ul>
-            <li><a href="">All</a></li>
-            <li><a href="">Clothes</a></li>
-            <li><a href="">Electronics</a></li>
+            <li><a routerLink="home">All</a></li>
+            <li *ngFor="let item of categories">
+                <!-- Imprimir el nombre de la categoria -->
+                <!-- [routerLink] - estará de forma dinámica porque va a variar -->
+                <!-- le colocamos la url, y luego el id del item de categoría -->
+                <a [routerLink]="['/category', item.id]">{{ item.name }}</a>
+            </li>
         </ul>
     </div>
 </div>
@@ -31,9 +35,15 @@
             </a>
             
             <ul>
-                <li><a href="">All</a></li>
-                <li><a href="">Clothes</a></li>
-                <li><a href="">Electronics</a></li>
+                <!-- Vamos a usar routerLink en vez del href -->
+                <li><a routerLinkActive="active" routerLink="home">All</a></li>
+                <!-- Hacemos un ciclo de categorias para traer a todas las categorias -->
+                <li *ngFor="let item of categories">
+                    <!-- Imprimir el nombre de la categoria -->
+                    <!-- [routerLink] - estará de forma dinámica porque va a variar -->
+                    <!-- le colocamos la url, y luego el id del item de categoría -->
+                    <a routerLinkActive="active" [routerLink]="['/category', item.id]">{{ item.name }}</a>
+                </li>
             </ul>
         </nav>
 

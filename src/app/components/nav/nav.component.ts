@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 // Servicios
 import { StoreService } from '../../services/store.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { CategoriesService } from '../../services/categories.service.ts.service';
 
 // Interfaces
-import { User } from 'src/app/models/user.model';
+import { User } from '../../models/user.model';
+import { Category } from '../../models/product.model';
 
 @Component({
   selector: 'app-nav',
@@ -18,10 +20,12 @@ export class NavComponent implements OnInit {
   counter = 0;
   // token = '';
   profile: User | null = null;
+  categories: Category[] = [];
 
   constructor (
     private storeService: StoreService,
-    private authService: AuthService
+    private authService: AuthService,
+    private categoriesServices: CategoriesService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +33,9 @@ export class NavComponent implements OnInit {
     this.storeService.myCart$.subscribe(products => {
       // Cada vez que añade a un carrito nos avisará 
       this.counter = products.length;
-    })
+    });
+    // Llamamos a la función todas las categorias
+    this.getAllCategories();
   }
 
   toggleMenu() {
@@ -44,13 +50,13 @@ export class NavComponent implements OnInit {
     })
   }
 
-  /* getProfile() {
-    // Ya no es necesario que el token esté en el componente porque estará guardado
-    // this.authService.getProfile(this.token)
-    this.authService.getProfile()
-    .subscribe(user => {
-      this.profile = user;
-    })
-  } */
+  getAllCategories() {
+    // Traemos a todas las categorias
+    this.categoriesServices.getAll()
+    .subscribe(data => {
+      // Asignar a nuestro array los datos
+      this.categories = data;
+    });
+  }
 
 }
