@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 // switchMap - para que funcione como un .then
 import { switchMap } from 'rxjs/operators';
 
@@ -15,13 +15,16 @@ import { ProductsService } from '../../services/products.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-
   // Arreglo de Lo que se agrega al carrito
   myShoppingCart: Product[] = [];
   // Cuanto cuesta en total todo lo que está escogiendo al carrito
   total = 0;
+
   // Recibir datos
   @Input() products: Product[] = [];
+  // Emite comunicación al padre
+  @Output() loadMore = new EventEmitter();
+
   showProductDetail = false;
   productChosen: Product = {
     id: '',
@@ -34,8 +37,6 @@ export class ProductsComponent {
       name: '',
     },
   };
-  // limit = 10; // 10 elementos
-  // offset = 0; // Inicie en 0
 
   // loading - que puede estar cargando
   // success - que todo está bien
@@ -76,24 +77,6 @@ export class ProductsComponent {
     private productsService: ProductsService) { 
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
-
-  // Como componente no va hacer la solicitud inicial
-  // Lo enviaremos por medio de un Input
-  /* ngOnInit(): void {
-    // Manejar cosas asincronas
-    // subscribe() -> tendremos la información ya lista que hemo traido del API 
-    // this.productsService.getAllProducts() // obtenemos todos los productos
-    // Primer parametro - Traiga 10 elementos
-    // Segundo elemento - Iniciamos en el 0 del array
-    // this.productsService.getAllProducts(10, 0) // Obtener todos los productos
-    this.productsService.getProductsByPage(10, 0) // Queremos los productos por una página en específico
-    .subscribe(data => {
-      // console.log(data); 
-      // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-      this.products = data;
-      this.offset = this.limit;
-    })
-  } */
 
   onAddToShoppingCart (product: Product) {
     // Para agregar al array el producto
@@ -184,7 +167,7 @@ export class ProductsComponent {
       const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
       // En ese array específico pon la nueva actualización
       this.products[productIndex] = data;
-    })
+    });
   }
 
   deleteProduct() {
@@ -194,18 +177,10 @@ export class ProductsComponent {
       const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
       this.products.splice(productIndex, 1);
       this.showProductDetail = false;
-    })
+    });
   }
 
-  /* loadMore() {
-    this.productsService.getProductsByPage(this.limit, this.offset) // Queremos los productos por una página en específico
-    .subscribe(data => {
-      // concat() - para concatenar un array
-      // concatenamos el array que nos llegue de data para que añada más, en vez de sobrescribir
-      // Modificamos el array original
-      this.products = this.products.concat(data);
-      // le damos el valor limit a offset porque es cuanto queremos saltar
-      this.offset = this.limit;
-    })
-  } */
+  onLoadMore() {
+    this.loadMore.emit();
+  }
 }

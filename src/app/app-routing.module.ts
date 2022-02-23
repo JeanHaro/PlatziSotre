@@ -28,7 +28,8 @@ const routes: Routes = [
   }, 
   {
     // Cuando se le coloca category, renderiza el componente Category
-    path: 'category',
+    // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
+    path: 'category/:id',
     component: CategoryComponent
   },
   {

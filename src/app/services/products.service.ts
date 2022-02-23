@@ -31,10 +31,20 @@ export class ProductsService {
   // El enlace está en el proxy
   // environment.API_URL - Si el ambiente está en desarrollo, viene el valor en vacío
   // environment.API_URL - Si el ambiente está en producción, viene el enlace 
-  private apiUrl = `${environment.API_URL}/api/products`;
+  private apiUrl = `${environment.API_URL}/api`;
 
   //  Un servicio que inyecta a otro servicio
   constructor (private http: HttpClient) { }
+
+  getByCategory (categoryId: string, limit?:number, offset?: number) {
+    let params = new HttpParams();
+    if (limit && offset != null) {
+      params = params.set('limit', limit);
+      params = params.set('offset', offset);
+    }
+
+    return this.http.get<Product[]>(`${this.apiUrl}/categories/${categoryId}/products`, { params });
+  }
 
   // Para que obtenga todos los productos
   // También para que obtenga una parte de los productos como getProductsByPage
@@ -50,7 +60,7 @@ export class ProductsService {
     // http.get() - hacer una petición a una URL
     // Si queremos que alguna petición sea evaluada por el TimeInterceptor, tendriamos que enviarle el contexto
     // Se vuelve true el checktime al llamarlo
-    return this.http.get<Product[]>(this.apiUrl, { params, context: checkTime() })
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, { params, context: checkTime() })
     .pipe(
       retry(3), // Reintentar la petición 3 veces si no encuentra
       // map() - evaluar cada valor que venga del observable
@@ -73,7 +83,7 @@ export class ProductsService {
 
   // Obtener un producto con el id
   getProduct (id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         // Si es un error 500, que es un error interno del servidor
@@ -100,7 +110,7 @@ export class ProductsService {
 
   // Obtener una cantidad de productos
   getProductsByPage (limit: number, offset: number) {
-    return this.http.get<Product[]>(`${this.apiUrl}`, {
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, {
       // Enviar parametros al get
       params: {limit, offset}
     }).pipe(
@@ -117,7 +127,7 @@ export class ProductsService {
   // Crear productos
   create (dto: CreateProductDTO) {
     // post - retorne un producto, la data que venga es la data que vamos enviar en el cuerpo de la petición para que sea enviado a la API
-    return this.http.post<Product>(this.apiUrl, dto);
+    return this.http.post<Product>(`${this.apiUrl}/products`, dto);
   }
 
   // Actualizar datos
@@ -125,11 +135,11 @@ export class ProductsService {
   update (id: string, dto: UpdateProductDTO) {
     // put<> - put es para enviar toda la información, aún así si solo hemos cambiado un solo valor
     // patch<> - esto nos sirve para ser la edición de un atributo en particular, si solo cambiamos el nombre, solo enviamos el nombre
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, dto);
   }
 
   // Borrar datos
   delete (id: string) {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/products/${id}`);
   }
 }
