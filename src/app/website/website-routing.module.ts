@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 // Páginas
 import { LayoutComponent } from './components/layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
-import { CategoryComponent } from './pages/category/category.component';
 import { MycartComponent } from './pages/mycart/mycart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -35,8 +34,8 @@ const routes: Routes = [
       {
         // Cuando se le coloca category, renderiza el componente Category
         // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
-        path: 'category/:id',
-        component: CategoryComponent
+        path: 'category',
+        loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule)
       },
       {
         // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
