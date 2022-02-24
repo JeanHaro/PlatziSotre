@@ -22,6 +22,16 @@ export class ProductsComponent {
 
   // Recibir datos
   @Input() products: Product[] = [];
+  // Recibe un id
+  // @Input() productId: string | null = null;
+  // set - para estar vigilando continuamente el cambio de este Input
+  @Input() set productId (id: string | null) {
+    // Si realmente viene el id
+    if (id) {
+      // Con el id mostrariamos el ShowDetail
+      this.onShowDetail(id);
+    }
+  }
   // Emite comunicación al padre
   @Output() loadMore = new EventEmitter();
 
@@ -98,7 +108,12 @@ export class ProductsComponent {
 
   onShowDetail(id: string) {
     this.statusDetail = 'loading';
-    this.toggleProductDetail();
+    // Si está cerrado
+    if (!this.showProductDetail) {
+      this.showProductDetail = true;
+    }
+
+    // this.toggleProductDetail();
     this.productsService.getOne(id)
       .subscribe(data => {
         // console.log('product', data);

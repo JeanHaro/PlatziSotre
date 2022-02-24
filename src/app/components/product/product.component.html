@@ -10,5 +10,10 @@
 <p>{{ product?.taxes | currency: 'PE' }}</p>
 <!-- appHighlight - es la directiva que creamos -->
 <p appHighlight>{{ product.description }}</p>
-<button (click)="onShowDetail()">Ver Detalle</button>
+<!-- <button (click)="onShowDetail()">Ver Detalle</button> -->
+<!-- routerLink - que se vaya al /home -->
+<!-- queryParams - le enviamos el id de nuestro producto -->
+<!-- <a routerLink="/home" [queryParams]="{product: product.id}">Ver Detalle</a> -->
+<!-- . - para que lo coloque en la ruta que esté en ese momento -->
+<a routerLink="." [queryParams]="{product: product.id}">Ver Detalle</a>
 <button (click)="onAddToCart()">Add Cart</button>

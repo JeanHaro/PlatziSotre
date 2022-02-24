@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+// Queremos escuchar la ruta
+import { ActivatedRoute } from '@angular/router';
+
 // Interface
 import { Product } from '../../models/product.model';
 
@@ -16,9 +19,12 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   limit = 10; // 10 elementos
   offset = 0; // Inicie en 0
+  productId: string | null = null;
 
   constructor (
-    private productsService: ProductsService) { }
+    private productsService: ProductsService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     // Manejar cosas asincronas
@@ -33,6 +39,15 @@ export class HomeComponent implements OnInit {
       // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
       this.products = data;
       this.offset = this.limit;
+    });
+
+    // Queremos vigilar los parametros URL
+    // paramMap - parametros que vienen en la ruta
+    // queryParamMap - parametros tipo query
+    this.route.queryParamMap.subscribe(params => {
+      // recibe los parametros de los productos
+      this.productId = params.get('product');
+      console.log(this.productId);
     })
   }
 
