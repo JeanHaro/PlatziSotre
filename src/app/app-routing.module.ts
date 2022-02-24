@@ -53,7 +53,8 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'not-found',
+    // ** - cuando no encuentra nada
+    path: '**',
     component: NotFoundComponent
   }
 ];
