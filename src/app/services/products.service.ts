@@ -76,13 +76,13 @@ export class ProductsService {
   // Read y Update
   fetchReadAndUpdate (id: string, dto: UpdateProductDTO) {
     return zip(
-      this.getProduct(id),
+      this.getOne(id),
       this.update(id, {title: 'nuevo'})
     )
   }
 
   // Obtener un producto con el id
-  getProduct (id: string) {
+  getOne (id: string) {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`)
     .pipe(
       catchError((error: HttpErrorResponse) => {

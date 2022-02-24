@@ -1,4 +1,6 @@
-<app-img *ngIf="product.images.length > 0" [img]="product.images[0]"></app-img>
+<a [routerLink]="['/product', product.id]">
+    <app-img *ngIf="product.images.length > 0" [img]="product.images[0]"></app-img>
+</a>
 <!-- currency - le pone un formato adecuado para monedas, y le puede poner el valor de la moneda que estamos manejando, como el de 
     Colombia, Perú, etc  -->
 <h2>{{ product.price | currency: 'PE' }}</h2>

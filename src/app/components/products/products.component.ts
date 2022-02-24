@@ -99,7 +99,7 @@ export class ProductsComponent {
   onShowDetail(id: string) {
     this.statusDetail = 'loading';
     this.toggleProductDetail();
-    this.productsService.getProduct(id)
+    this.productsService.getOne(id)
       .subscribe(data => {
         // console.log('product', data);
         // this.toggleProductDetail();
@@ -112,7 +112,7 @@ export class ProductsComponent {
   }
 
   readAndUpdate (id: string) {
-    this.productsService.getProduct(id)
+    this.productsService.getOne(id)
     // Apenas obtengamos el producto queremos enviar una actualizacion
     // Esto es un callback hell
     .pipe(

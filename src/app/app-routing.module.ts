@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 const routes: Routes = [
   // Acá se escriben las rutas
@@ -31,6 +32,11 @@ const routes: Routes = [
     // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
     path: 'category/:id',
     component: CategoryComponent
+  },
+  {
+    // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
+    path: 'product/:id',
+    component: ProductDetailComponent
   },
   {
     path: 'my-cart',
