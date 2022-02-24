@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 // Servicios
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../services/products.service';
 
 // Interfaces
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 
 @Component({
   selector: 'app-category',

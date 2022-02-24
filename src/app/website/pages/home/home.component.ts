@@ -4,10 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 // Interface
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 
 // Servicios
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../services/products.service';
 
 @Component({
   selector: 'app-home',

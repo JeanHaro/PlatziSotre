@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 // Servicios
-import { StoreService } from '../../services/store.service';
-import { AuthService } from '../../services/auth.service';
-import { CategoriesService } from '../../services/categories.service.ts.service';
+import { StoreService } from '../../../services/store.service';
+import { AuthService } from '../../../services/auth.service';
+import { CategoriesService } from '../../../services/categories.service.ts.service';
 
 // Interfaces
-import { User } from '../../models/user.model';
-import { Category } from '../../models/product.model';
+import { User } from '../../../models/user.model';
+import { Category } from '../../../models/product.model';
 
 @Component({
   selector: 'app-nav',
