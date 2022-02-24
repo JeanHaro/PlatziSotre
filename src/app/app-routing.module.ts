@@ -66,6 +66,11 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'cms',
+    // Carga el hijo
+    loadChildren: () => import('./cms/cms.module').then(m => m.CmsModule)
+  },
+  {
     // ** - cuando no encuentra nada
     path: '**',
     component: NotFoundComponent
