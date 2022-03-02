@@ -35,7 +35,11 @@ const routes: Routes = [
         // Cuando se le coloca category, renderiza el componente Category
         // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL
         path: 'category',
-        loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule)
+        loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule),
+        data: {
+          // Para que precargue este enlace
+          preload: true,
+        }
       },
       {
         // Se le coloca /:id porque quiere recibir un parámetro, un parámetro por URL

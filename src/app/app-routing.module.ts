@@ -1,20 +1,29 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+// Utiliza la tecnica de PreloadAllModules cuando no se tiene tantos modulos que precargar
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 // Pagina 404
 import { NotFoundComponent } from './not-found/not-found.component';
+
+// Servicios
+// Estrategia de Preload Personalizada
+import { CustomPreloadService } from './services/custom-preload.service';
 
 const routes: Routes = [
   {
     // path inicial
     path: '',
     // Carga el hijo
-    loadChildren: () => import('./website/website.module').then(m => m.WebsiteModule)
+    loadChildren: () => import('./website/website.module').then(m => m.WebsiteModule),
+    data: {
+      // Para que lo precargue
+      preload: true
+    }
   },
   {
     path: 'cms',
     // Carga el hijo
-    loadChildren: () => import('./cms/cms.module').then(m => m.CmsModule)
+    loadChildren: () => import('./cms/cms.module').then(m => m.CmsModule),
   },
   {
     // ** - cuando no encuentra nada
@@ -24,7 +33,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // Activamos la precarga
+  imports: [RouterModule.forRoot(routes, {
+    // Realiza preload a todo los modulos, todas las páginas
+    // preloadingStrategy: PreloadAllModules
+
+    // Realiza preload a las páginas que dimos data, preload: true
+    preloadingStrategy: CustomPreloadService
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
