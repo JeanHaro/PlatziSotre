@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 // Utiliza la tecnica de PreloadAllModules cuando no se tiene tantos modulos que precargar
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
+import { QuicklinkStrategy } from 'ngx-quicklink';
+
 // Pagina 404
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -39,7 +41,10 @@ const routes: Routes = [
     // preloadingStrategy: PreloadAllModules
 
     // Realiza preload a las páginas que dimos data, preload: true
-    preloadingStrategy: CustomPreloadService
+    // preloadingStrategy: CustomPreloadService
+
+    // Para que precargue los modulos que están en la vista del usuario
+    preloadingStrategy: QuicklinkStrategy
   })],
   exports: [RouterModule]
 })

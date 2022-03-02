@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { WebsiteRoutingModule } from './website-routing.module';
 import { SwiperModule } from 'swiper/angular';
 
+// Para que también precargue las pagina a la vista del usuario en estas páginas de website
+import { QuicklinkModule } from 'ngx-quicklink';
+
 // Modulo
 import { SharedModule } from '../shared/shared.module';
 
@@ -36,7 +39,8 @@ import { LayoutComponent } from './components/layout/layout.component';
     CommonModule,
     WebsiteRoutingModule,
     SwiperModule,
-    SharedModule
+    SharedModule,
+    QuicklinkModule
   ]
 })
 export class WebsiteModule { }
