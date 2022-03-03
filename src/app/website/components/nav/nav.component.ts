@@ -38,6 +38,11 @@ export class NavComponent implements OnInit {
     });
     // Llamamos a la función todas las categorias
     this.getAllCategories();
+    this.authService.user$
+    .subscribe(data => {
+      // Recibir el usuario actual
+      this.profile = data;
+    })
   }
 
   toggleMenu() {
@@ -48,7 +53,7 @@ export class NavComponent implements OnInit {
     // this.authService.login('Jean@gmail.com', '1212')
     this.authService.logininAndGet('Jean@gmail.com', '1212')
     .subscribe(user => {
-      this.profile = user;
+      this.router.navigate(['/profile']);
     })
   }
 
