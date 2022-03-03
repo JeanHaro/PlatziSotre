@@ -11,6 +11,9 @@ import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
+// Guardianes
+import { AuthGuard } from '../guards/auth.guard';
+
 const routes: Routes = [
   // Acá se escriben las rutas
   {
@@ -64,6 +67,7 @@ const routes: Routes = [
       },
       {
         path: 'profile',
+        canActivate: [ AuthGuard ],
         component: ProfileComponent
       },
     ]
