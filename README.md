@@ -1,2 +1,2 @@
-# PlatziStore
-Curso de Angular: Lazy Loading y Programacion Modular
+# PlatziSotre
+Del Curso de Platzi: Curso de Angular Router: Lazy Loading y Programación Modular
