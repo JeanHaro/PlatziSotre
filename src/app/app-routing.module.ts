@@ -11,6 +11,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 // Estrategia de Preload Personalizada
 import { CustomPreloadService } from './services/custom-preload.service';
 
+// Guardian
+import { AdminGuard } from './guards/admin.guard';
+
 const routes: Routes = [
   {
     // path inicial
@@ -24,6 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'cms',
+    canActivate: [ AdminGuard ],
     // Carga el hijo
     loadChildren: () => import('./cms/cms.module').then(m => m.CmsModule),
   },
