@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Servicios
 import { StoreService } from '../../../services/store.service';
@@ -25,7 +26,8 @@ export class NavComponent implements OnInit {
   constructor (
     private storeService: StoreService,
     private authService: AuthService,
-    private categoriesServices: CategoriesService
+    private categoriesServices: CategoriesService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,4 +61,9 @@ export class NavComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.authService.logout();
+    this.profile = null;
+    this.router.navigate(['/home']);
+  }
 }
